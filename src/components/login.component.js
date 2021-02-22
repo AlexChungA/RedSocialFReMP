@@ -59,7 +59,6 @@ export default class Login extends Component {
         withCredentials: "include"
     }).then(res => res.json())
     .then(data => {
-      console.log(data)
         if(data.loggedIn){
             localStorage.setItem("session", JSON.stringify(data))
 
