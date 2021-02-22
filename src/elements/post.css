@@ -1,0 +1,213 @@
+.post {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.75);
+}
+
+.post__top {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 15px;
+}
+
+.post__avatar {
+    margin-right: 10px;
+}
+.post__topInfo{
+    text-align: left;
+}
+.post__topInfo > a {
+    font-weight: 500;
+    font-family: 'Fira Sans', sans-serif;
+    font-size: medium;
+    margin-bottom: 0;
+    color: black;
+}
+
+.post__bottom {
+    text-align: justify;
+    padding: 2% 5%;
+}
+
+.post__details{
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding:0px 15px;
+}
+.post__likeInfo{
+    text-align: left;
+    font-size: small;
+    color: gray;
+
+}
+
+.post__image > img {
+    width: 60%;
+}
+
+@media(max-width:450px) {
+    .post__options {
+        padding-top: 10px;
+        border-top: 1px solid lightgray;
+        display: flex;
+        justify-content: space-evenly;
+        font-size: xx-small;
+        color: gray;
+        cursor: pointer;
+        padding: 15px;
+    }
+    .post__image > img {
+        width: 100%;
+    }
+}
+@media(min-width:450px) {
+    .post__options {
+        padding-top: 10px;
+        border-top: 1px solid lightgray;
+        display: flex;
+        justify-content: space-evenly;
+        font-size: medium;
+        color: gray;
+        cursor: pointer;
+        padding: 15px;
+    }
+}
+
+.post__option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    flex: 1;
+}
+
+.post__option > p {
+    margin-left: 10px;
+}
+
+.post__option:hover {
+    background-color: #eff2f5;
+    border-radius: 10px;
+}
+
+/*Tooltip*/
+.rrui__tooltip
+{
+	display     : flex;
+	align-items : left;
+    padding-top: calc(0.6rem * 0.5);
+	padding-left  : calc(0.6rem * 1.5);
+	padding-right : calc(0.6rem * 1.5);
+	height        : calc(0.6rem * 3);
+
+	color            : rgba(255, 255, 255, 0.741);
+	background-color : rgba(0, 0, 0, 0.75);
+
+	border-radius : 10px;
+    font-size: small;
+    
+
+	cursor: default;
+	outline: none;
+}
+
+.rrui__tooltip
+{
+	opacity: 0;
+}
+
+.rrui__tooltip--after-show
+{
+	opacity: 1;
+}
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--before-hide
+{
+	opacity: 0;
+}
+
+.rrui__tooltip--top
+{
+	transform: translateY(calc(-1 * 0.5em));
+}
+
+.rrui__tooltip--top.rrui__tooltip--after-show
+{
+	transform: translateY(calc(-1 * 0.2em));
+}
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--top.rrui__tooltip--before-hide
+{
+	transform: translateY(calc(-1 * 0.5em));
+}
+
+.rrui__tooltip--left
+{
+	transform: translateX(calc(-1 * 0.5em));
+}
+
+.rrui__tooltip--left.rrui__tooltip--after-show
+{
+	transform: translateX(calc(-1 * 0.2em));
+}
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--left.rrui__tooltip--before-hide
+{
+	transform: translateX(calc(-1 * 0.5em));
+}
+
+.rrui__tooltip--bottom
+{
+	transform: translateY(0.5em);
+}
+
+.rrui__tooltip--bottom.rrui__tooltip--after-show
+{
+	transform: translateY(0.2em);
+}
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--bottom.rrui__tooltip--before-hide
+{
+	transform: translateY(0.5em);
+}
+
+.rrui__tooltip--right
+{
+	transform: translateX(0.5em);
+}
+
+.rrui__tooltip--right.rrui__tooltip--after-show
+{
+	transform: translateX(0.2em);
+}
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--right.rrui__tooltip--before-hide
+{
+	transform: translateX(0.5em);
+}
+
+.rrui__tooltip--after-show,
+.rrui__tooltip--before-hide
+{
+	transition : opacity 120ms, transform 120ms;
+}
+
+.rrui__tooltip__target
+{
+	/* Prevents entering text selection mode
+	   on mobile devices when tapping down and holding */
+	user-select: none;
+	/* Resets `cursor: pointer` set by `interactive={true}`'s `.rrui__button-reset`. */
+	cursor: inherit;
+	/* Resets `white-space : nowrap` set by `interactive={true}`'s `.rrui__button-reset`. */
+	white-space: initial;
+}

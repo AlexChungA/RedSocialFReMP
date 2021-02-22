@@ -1,0 +1,20 @@
+.feed {
+    flex:1;
+    padding: 15% 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+#h6{
+    align-self: flex-start;
+    margin-top: 5%;
+}
+/*por ahora:*/
+@media (min-width:1200px){
+    .inicio{
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+}

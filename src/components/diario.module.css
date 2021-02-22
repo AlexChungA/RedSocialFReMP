@@ -1,0 +1,163 @@
+.form_diario {
+  padding: 0% 7%;
+  height: 38px;
+}
+.form_diario input{
+  display: inline;
+  height: 100%;
+}
+@media (max-width:1200px) {
+  .btn {
+      background-color: #73C0B0;
+      text-decoration: none;
+      color: #000000;
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0 10px;
+  }
+}
+@media (min-width:1200px){
+  .btn{
+      display: none;
+  }
+}
+/* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+.journal{
+  padding:15% 5%;
+}
+.todayLabel{
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  font-size: 35px;
+  text-align: left;
+}
+
+.saveDay{
+  background-color: #68ac9e;
+  width: 60%;
+  padding: 5px;
+  text-decoration: none;
+  color: #000000;
+  font-size: 18px;
+}
+
+.question{
+  font-size: 30px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  font-family: 'Italiana', serif;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+.form_diario input,.ul{
+  width: 60%;
+}
+.ul{
+  width: 47.5%;
+}
+.question{
+  font-size: 30px;
+  width: 60%;
+  font-family: 'Italiana', serif;
+}
+  
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+.form_diario input{
+  width: 90%;
+}
+.ul{
+  width: 77.5%;
+}
+.question{
+  font-size: 30px;
+  width: 60%;
+  text-align: center;
+  font-family: 'Italiana', serif;
+}
+}
+
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove margins and padding from the list */
+.ul {
+  margin: auto;
+  margin-top: 1%;
+  padding: 0;
+  overflow: auto;
+  list-style-type: none;
+  height: 50%;
+}
+
+/* Style the list items */
+.ul .li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.2s;
+
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Set all odd list items to a different color (zebra-stripes) */
+.ul .li:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+/* Darker background-color on hover */
+.ul .li:hover {
+  background: #ddd;
+}
+
+/* When clicked on, add a background color and strike out text */
+.ul .li.checked {
+  background: #73C0B0;
+  color: #fff;
+  text-decoration: line-through;
+}
+
+/* Add a "checked" mark when clicked on */
+.ul .li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 30%;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
+}
+
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+  background-color: #f44336;
+  color: white;
+}
