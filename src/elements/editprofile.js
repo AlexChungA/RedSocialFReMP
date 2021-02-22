@@ -44,7 +44,7 @@ export default function EditProfileButton({updateProfile,user}) {
 
   const handleUpdate = () => {
     updateProfile(labor,imageUrl)
-    fetch("/personas",{method:'GET'}).then(res=>res.json())
+    fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
        // .then(data=>socket.volatile.emit('users',data.users))
     setOpen(false)
   }

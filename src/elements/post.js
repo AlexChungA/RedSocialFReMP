@@ -55,16 +55,16 @@ export default function Post({id,userId,image, username, message,timestamp,handl
     timestamp = new Date(timestamp);
     const [open, setOpen] = React.useState(false);  
     React.useEffect(() => {
-        fetch("/perfil/"+userId).then(res=>res.json()).then(data=>{setUserImageUrl(data.user.imageUrl)})
+        fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json()).then(data=>{setUserImageUrl(data.user.imageUrl)})
     }, [])
     
     const handleLike = () => {
        if (like) {setLike(false)
-                  fetch(`/inicio/posts/${id}/likes/${userIdStorage}`,{method: "DELETE",withCredentials: "include"})
+                  fetch(`https://red-social-fc.herokuapp.com/inicio/posts/${id}/likes/${userIdStorage}`,{method: "DELETE",withCredentials: "include"})
               .then(res=>res.json()).then(data=>{setCountLikes(data.countLikes) })
        }
       else{setLike(true)
-            fetch(`/inicio/posts/${id}/likes`,{
+            fetch(`https://red-social-fc.herokuapp.com/inicio/posts/${id}/likes`,{
                       method: "POST",
                       headers: {
                           "Content-Type": "application/json"
@@ -75,7 +75,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
     }
 
     React.useEffect(()=>{
-      fetch(`/inicio/posts/${id}/likes`,{withCredentials: "include"}).then(res=>res.json())
+      fetch(`https://red-social-fc.herokuapp.com/inicio/posts/${id}/likes`,{withCredentials: "include"}).then(res=>res.json())
         .then(data=>{setCountLikes(data.countLikes)
           if(data.peopleLiked.find(user=>user.userId===userIdStorage)){
             setLike(true)

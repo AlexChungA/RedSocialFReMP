@@ -25,7 +25,7 @@ export default class People extends Component {
     }
 
     componentDidMount(){
-        fetch("/personas",{method:'GET'}).then(res=>res.json())
+        fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
         .then(data=>this.setState({users:data.users}))
     }
 
@@ -36,7 +36,7 @@ export default class People extends Component {
         /*let socket = io.connect("https://redsocial-305406.web.app", {
             withCredentials: true,
           });*/
-        await fetch(`/users/${userId}/friends/`,{
+        await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -48,7 +48,7 @@ export default class People extends Component {
             localStorage.setItem("session", JSON.stringify(data))
             this.setState({user:data.user})
         })
-        fetch("/personas",{method:'GET'}).then(res=>res.json())
+        fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
         .then(data => {this.setState({users:data.users})
                        /*socket.volatile.emit('users',data.users)*/})
       }
@@ -60,12 +60,12 @@ export default class People extends Component {
         /*let socket = io.connect("https://redsocial-305406.web.app", {
             withCredentials: true,
           });*/
-        await fetch(`/users/${userId}/friends/${friendId}/`,{method: "DELETE"}).then(res=>res.json())
+        await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/${friendId}/`,{method: "DELETE"}).then(res=>res.json())
         .then(data => {
             localStorage.setItem("session", JSON.stringify(data))
             this.setState({user:{}})
         })
-        fetch("/personas",{method:'GET'}).then(res=>res.json())
+        fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
         .then(data => {this.setState({users:data.users})
                       /* socket.volatile.emit('users',data.users)*/})
     }

@@ -37,7 +37,7 @@ export default class Perfil extends Component {
 
     componentDidMount(){
         const userId = this.props.match.params.userId
-        fetch("/perfil/"+userId).then(res=>res.json())
+        fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json())
         .then(data=>{
         if(userId !==this.state.user._id){
         this.setState(
@@ -58,7 +58,7 @@ export default class Perfil extends Component {
         const sessionJson = JSON.parse(sessionStr)
         if (prevProps.match.params.userId !== this.props.match.params.userId){
             const userId = this.props.match.params.userId
-            fetch("/perfil/"+userId).then(res=>res.json())
+            fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json())
             .then(data=>{
                 if(userId !==this.state.user._id){
                 this.setState(
@@ -76,7 +76,7 @@ export default class Perfil extends Component {
     }
 
     updateProfile = (labor,imageUrl) => {
-        fetch(`/perfil/${this.state.user._id}`,
+        fetch(`https://red-social-fc.herokuapp.com/perfil/${this.state.user._id}`,
             {method:'POST',
             headers: {
                 "Content-Type": "application/json"
