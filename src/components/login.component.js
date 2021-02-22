@@ -50,7 +50,7 @@ export default class Login extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     const user = {email:this.state.email, password:this.state.password};
-    await fetch("/",{
+    await fetch("https://red-social-fc.herokuapp.com/",{
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -84,7 +84,7 @@ export default class Login extends Component {
           ProviderId: 'Google',
           friends:[]
         };
-        fetch("/sign-up",{
+        fetch("https://red-social-fc.herokuapp.com/sign-up",{
           method: "POST",
           headers: {
               "Content-Type": "application/json"
