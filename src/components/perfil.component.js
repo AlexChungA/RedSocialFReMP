@@ -86,7 +86,7 @@ export default class Perfil extends Component {
             }).then(res=>res.json())
             .then(data=>{
                 localStorage.setItem("session", JSON.stringify(data))
-                this.setState({user:data.user})
+                this.setState({user:data.user,imageUrl:data.user.imageUrl})
             })
     }
     render(){
