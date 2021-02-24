@@ -36,7 +36,8 @@ export default class Perfil extends Component {
     }
 
     componentDidMount(){
-        const userId = this.props.match.params.userId
+        let userId = this.props.match.params.userId
+        if(userId==="me")userId=this.state.user._id
         fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json())
         .then(data=>{
         if(userId !==this.state.user._id){
@@ -54,8 +55,6 @@ export default class Perfil extends Component {
     }
 
     componentDidUpdate(prevProps){
-        const sessionStr = localStorage.getItem("session")
-        const sessionJson = JSON.parse(sessionStr)
         if (prevProps.match.params.userId !== this.props.match.params.userId){
             const userId = this.props.match.params.userId
             fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json())
@@ -101,7 +100,7 @@ export default class Perfil extends Component {
                     <div className="feed">
                         <ProfileAvatar src={this.state.imageUrl}/>
                         <h4>{this.state.name}</h4>
-                        {this.props.match.params.userId==JSON.parse(localStorage.getItem("session")).user._id && 
+                        {this.props.match.params.userId===JSON.parse(localStorage.getItem("session")).user._id && 
                         <>
                         <EditProfileButton updateProfile={this.updateProfile} user={this.state.user}/>
                         <h6 id="h6">Tu actividad:</h6>

@@ -6,7 +6,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
 
 const sessionStr = localStorage.getItem("session")
-let userId = ""
+let userId = "me"
 if(sessionStr){
 const sessionJson = JSON.parse(sessionStr)
 userId = sessionJson.user._id
