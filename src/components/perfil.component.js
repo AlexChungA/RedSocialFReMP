@@ -100,7 +100,7 @@ export default class Perfil extends Component {
                     <div className="feed">
                         <ProfileAvatar src={this.state.imageUrl}/>
                         <h4>{this.state.name}</h4>
-                        {this.props.match.params.userId===JSON.parse(localStorage.getItem("session")).user._id || this.props.match.params.userId==="me" && 
+                        {(this.props.match.params.userId===JSON.parse(localStorage.getItem("session")).user._id || this.props.match.params.userId==="me") && 
                         <>
                         <EditProfileButton updateProfile={this.updateProfile} user={this.state.user}/>
                         <h6 id="h6">Tu actividad:</h6>
