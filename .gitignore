@@ -5,13 +5,10 @@
 /.pnp
 .pnp.js
 venv
-firebase.json
-.firebaserc
-.firebase
-api
+
 # testing
 /coverage
-
+/api/heroku
 # production
 /build
 
