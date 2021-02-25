@@ -146,3 +146,6 @@ span.buttonText {
   font-size: 12px;
   display: contents;
 }
+.options{
+  display:flex;
+}

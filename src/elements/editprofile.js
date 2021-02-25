@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 //let socket = io.connect("https://redsocial-305406.web.app");
-export default function EditProfileButton({updateProfile,user}) {
+export default function EditProfileButton({update_profile,user}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [labor, setLabor] = React.useState(user.labor);
@@ -43,7 +43,7 @@ export default function EditProfileButton({updateProfile,user}) {
   };
 
   const handleUpdate = () => {
-    updateProfile(labor,imageUrl)
+    update_profile(labor,imageUrl)
     fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
        // .then(data=>socket.volatile.emit('users',data.users))
     setOpen(false)
