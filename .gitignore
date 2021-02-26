@@ -8,10 +8,10 @@ venv
 
 # testing
 /coverage
-/.vscode
+.vscode
 # production
 /build
-/api
+api
 # misc
 .DS_Store
 .env.local
