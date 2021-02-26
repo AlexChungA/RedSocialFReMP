@@ -4,7 +4,7 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import CloseIcon from '@material-ui/icons/Close';
 import NearMeIcon from "@material-ui/icons/NearMe";
 import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types'
 import Tooltip from 'react-responsive-ui/commonjs/Tooltip'
 import ReactTimeAgo from 'react-time-ago'
@@ -13,9 +13,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import { Avatar } from '@material-ui/core';
 import "./post.css";
 import BadgeAvatar from "./badgeavatar";
+import Comment from "./comment";
 
 const useStyles = makeStyles({
     close: {
@@ -43,19 +44,34 @@ TooltipContainer.propTypes = {
     children: PropTypes.node.isRequired
   }
 
+const CommentAvatar = withStyles({
+    root: {
+      height:"35px",
+      width:"35px",
+      marginRight:"0",
+      marginTop:"1%"
+    },
+  })(Avatar);
+
 export default function Post({id,userId,image, username, message,timestamp,handleRemovePost,feeling}) {
     const classes = useStyles();
     const sessionStr = localStorage.getItem("session")
     const sessionJson = JSON.parse(sessionStr)
     const userIdStorage = sessionJson.user._id
-    const usernameStorage = sessionJson.user.username
+    const usernameStorage = sessionJson.user.name
     const [userImageUrl,setUserImageUrl] = React.useState('');
     const [like,setLike] = React.useState();
+    const [comment,setComment] = React.useState('')
+    const [showcomments,setShowComments] = React.useState(true)
+    const [comments, setComments] = React.useState([])
     const [countLikes,setCountLikes] = React.useState(0);
+    const [countComments,setCountComments] = React.useState(0);
     timestamp = new Date(timestamp);
     const [open, setOpen] = React.useState(false);  
     React.useEffect(() => {
         fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json()).then(data=>{setUserImageUrl(data.user.imageUrl)})
+        fetch(`http://localhost:5000/inicio/posts/${id}/comments`).then(res=>res.json()).then(data=>{if(data.comments){setComments(data.comments)
+                                                                                                                       setCountComments(data.countComments)}})
     }, [])
     
     const handleLike = () => {
@@ -82,6 +98,25 @@ export default function Post({id,userId,image, username, message,timestamp,handl
           }else{setLike(false)}
         })
     },[like])
+
+    const handleCommentSubmit = (e) => {
+      e.preventDefault();
+      fetch(`http://localhost:5000/inicio/posts/${id}/comments`,{
+                      method: "POST",
+                      headers: {
+                          "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify({"userId":userId,"username":usernameStorage,"message":comment,"timestamp":new Date(),"userImageUrl":userImageUrl,"feeling":feeling}),
+                      withCredentials: "include"}).then(res=>res.json()).then(data=>{setComments([...comments,data.comment])
+                                                                                     setCountComments(data.countComments)})
+      setComment("")            
+    }
+
+    const handleRemoveComment = commentId =>{
+      fetch(`http://localhost:5000/inicio/posts/${id}/comments/${commentId}`,{method: "DELETE",withCredentials: "include"})
+              .then(res=>res.json()).then(data=>{setCountComments(data.countComments) 
+                                                  setComments(comments.filter(comment => comment._id !== commentId))})
+    }
     
     const handleClickOpen = () => {
         setOpen(true);
@@ -90,7 +125,15 @@ export default function Post({id,userId,image, username, message,timestamp,handl
       const handleClose = () => {
         setOpen(false);
       };
-    //TODO FUNCIONALIDAD DE COMENTAR Y COMPARTIR DE POST, MENSAJERÍA
+    const commentList = comments.map(comment => <Comment key={comment._id}
+                                                         id = {comment._id}
+                                                         userId = {comment.userId}
+                                                         username={comment.username}
+                                                         message={comment.message}
+                                                         timestamp={comment.timestamp}
+                                                         userImageUrl={comment.userImageUrl}
+                                                         feeling={comment.feeling}
+                                                         handleRemoveComment={handleRemoveComment}/>)
     return (
     <div className="post">
         <div className="post__top">
@@ -115,7 +158,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
               <Button onClick={handleClose} color="primary">
                 CANCELAR
               </Button>
-              <Button onClick={()=>handleRemovePost(id)} color="primary">
+              <Button onClick={()=>handleRemovePost(id)} color="secondary">
                 ELIMINAR
               </Button>
             </DialogActions>
@@ -130,19 +173,38 @@ export default function Post({id,userId,image, username, message,timestamp,handl
         </div>}
         <div className="post__details">{countLikes>0 &&
         <div className="post__likeInfo">A {countLikes} personas les gusta esto.</div>}
+        {countComments>0 &&
+        <div className="post__commentInfo">{countComments} comentarios</div>}
         </div>
         <div className="post__options">
             <Button className="post__option" onClick={handleLike} color={like?"primary":""}>
               <ThumbUpIcon /> Me gusta
             </Button>
             
-            <Button className="post__option">
+            <Button className="post__option" onClick={()=>setShowComments(!showcomments)}>
               <ChatBubbleOutlineIcon/> Comentar
             </Button>
+            {/*userId!==userIdStorage &&
             <Button className="post__option">
               <NearMeIcon/> Compartir
-            </Button>
+            </Button>*/} 
         </div>
+        {showcomments &&
+        <div className="comments">
+          {commentList}
+        <div className="commentSender">
+            <CommentAvatar src={userImageUrl} className="post__avatar"/>
+            <form onSubmit={handleCommentSubmit}>
+                <input 
+                value={comment} 
+                onChange={ (e) => setComment(e.target.value)} 
+                className="commentSender" 
+                placeholder={"Escribe un comentario..."}
+                />
+            </form>
+          </div>
+          </div>
+            }
     </div>
     );
 }

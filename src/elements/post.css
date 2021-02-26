@@ -42,7 +42,11 @@
     text-align: left;
     font-size: small;
     color: gray;
-
+}
+.post__commentInfo{
+    margin-left: 45%;
+    font-size: small;
+    color: gray;
 }
 
 .post__image > img {
@@ -51,14 +55,14 @@
 
 @media(max-width:450px) {
     .post__options {
-        padding-top: 10px;
+        padding-top: 5px;
         border-top: 1px solid lightgray;
         display: flex;
         justify-content: space-evenly;
         font-size: xx-small;
         color: gray;
         cursor: pointer;
-        padding: 15px;
+        padding: 5px 15px;
     }
     .post__image > img {
         width: 100%;
@@ -66,14 +70,14 @@
 }
 @media(min-width:450px) {
     .post__options {
-        padding-top: 10px;
+        padding-top: 5px;
         border-top: 1px solid lightgray;
         display: flex;
         justify-content: space-evenly;
         font-size: medium;
         color: gray;
         cursor: pointer;
-        padding: 15px;
+        padding: 5px 15px;
     }
 }
 
@@ -81,17 +85,101 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px;
+    padding: 0px 5px;
     flex: 1;
 }
 
-.post__option > p {
-    margin-left: 10px;
-}
+
 
 .post__option:hover {
     background-color: #eff2f5;
     border-radius: 10px;
+}
+.comment{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.comment__content{
+    display: flex;
+}
+.comment__info{
+    outline-width: 0;
+    border: none;
+    padding: 5px 20px;
+    display: inline-block;
+    max-width: 80%;
+    border-radius: 18px;
+    background-color: #eff2f5;
+}
+.comment__info > a {
+    font-weight: 500;
+    font-family: 'Fira Sans', sans-serif;
+    font-size: medium;
+    margin-bottom: 0;
+    color: black;
+}
+.comment__info > p {
+    margin:0;
+    display: flex;
+    word-break: break-all;
+    color:#000000;
+    font-weight: normal;
+}
+.comments{
+    border-top: 1px solid lightgray;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: medium;
+    color: gray;
+    padding: 5px 15px;
+    flex: 1;
+    flex-direction: column;
+}
+.commentSender {
+    border-bottom: 1px solid #eff2f5;
+    padding: 0px 15px;
+    display:flex;
+    width: 100%;
+}
+
+@media(min-width:400px){
+    .commentSender {
+        display: flex;
+        width: 100%;
+    }
+    .commentSender > form {
+        flex: 1;
+        display: flex;
+    }
+}
+
+.commentSender > form > input {
+    outline-width: 0;
+    border: none;
+    padding: 5px 20px;
+    margin: 2% 10px;
+    border-radius: 999px;
+    background-color: #eff2f5;
+}
+@media (max-width:1200px) {
+    .commentSender > form > button {
+        background-color: #73C0B0;
+        text-decoration: none;
+        color: #000000;
+        font-size: 8px;
+        font-weight: 500;
+        margin: 10px 10px;
+    }
+}
+@media (min-width:1200px){
+    .commentSender > form > button {
+        display: none;
+    }
+}
+
+.commentSender__input {
+    flex: 1;
 }
 
 /*Tooltip*/

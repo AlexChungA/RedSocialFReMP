@@ -47,9 +47,5 @@ export default function MessageSender({handleAddPost}){
                 <button className="btn float-right" onClick={handleSubmit} type="submit" disabled={input ? "" : "disabled"}>Publicar</button>
             </form>
         </div>
-
-        <div className="messageSender__bottom">
-
-        </div>
     </div>
 }

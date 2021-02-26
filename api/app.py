@@ -133,6 +133,8 @@ def delete_post(userId,_id):
     userId = objectid.ObjectId(userId)
     _id = objectid.ObjectId(_id)
     db.db.post_collection.delete_one({"userId":userId,"_id":_id})
+    for comment in db.db.comment_collection.find({"postId":_id}):
+        db.db.comment_collection.delete_one({"postId":_id,"_id":comment["_id"]})
     return {"post":{}}
 
 @app.route('/inicio/posts/<postId>/likes',methods=['POST'])
@@ -156,6 +158,34 @@ def delete_like(postId,userId):
     peopleLiked = db.db.post_collection.find_one({"_id":objectid.ObjectId(postId)})["likes"]
     peopleLiked = JsonEncoder(peopleLiked)
     return {"countLikes":countLikes}
+
+@app.route('/inicio/posts/<postId>/comments',methods=['POST'])
+def add_comment(postId):
+    comment = json.loads(request.data)
+    userId = objectid.ObjectId(comment["userId"])
+    comment["userId"] = userId
+    postId = objectid.ObjectId(postId)
+    comment["postId"] = postId
+    db.db.comment_collection.insert_one(comment)
+    countComments = len([comment for comment in db.db.comment_collection.find({"postId":postId})])
+    comment = JsonEncodeOne(comment)
+    return {"countComments":countComments,"comment":comment}
+
+@app.route('/inicio/posts/<postId>/comments',methods=['GET'])
+def get_comments(postId):
+    postId = objectid.ObjectId(postId)
+    comments = [comment for comment in db.db.comment_collection.find({"postId":postId})]
+    countComments = len(comments)
+    comments = JsonEncoder(comments)
+    return {"countComments":countComments,"comments":comments}
+
+@app.route('/inicio/posts/<postId>/comments/<commentId>',methods=['DELETE'])
+def delete_comment(postId,commentId):
+    postId = objectid.ObjectId(postId)
+    commentId = objectid.ObjectId(commentId)
+    db.db.comment_collection.delete_one({"postId":postId,"_id":commentId})
+    countComments = len([comment for comment in db.db.comment_collection.find({"postId":postId})])
+    return {"countComments":countComments}
 
 @app.route('/perfil/<userId>',methods=['GET'])
 def get_user(userId):
