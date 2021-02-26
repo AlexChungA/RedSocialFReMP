@@ -22,10 +22,11 @@ export default class Muro extends Component{
                 loggedIn = false
             else
                 loggedIn = sessionJson.loggedIn
-
+        let disabled=false
         this.state = {
             loggedIn,
-            posts:[]
+            posts:[],
+            disabled
         }
         this.handleAddPost.bind()
         this.handleRemovePost.bind()
@@ -39,7 +40,10 @@ export default class Muro extends Component{
         fetch('https://red-social-fc.herokuapp.com/inicio/posts/'+userId+'/')
         .then(response => response.json())
         .then(data => this.setState({posts:data.posts}),
-       );}
+       );
+       if(sessionJson.user.feeling==="molesto"){
+       this.setState({disabled:true})}else{this.setState({disabled:false})}
+    }
     }
 
     handleAddPost = addPost => {
@@ -78,6 +82,7 @@ export default class Muro extends Component{
                                                         image={post.imageUrl}
                                                         feeling={post.feeling}
                                                         handleRemovePost={this.handleRemovePost}
+                                                        disabled={this.state.disabled}
                                                     />)
         return(
             <div>

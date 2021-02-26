@@ -53,7 +53,7 @@ const CommentAvatar = withStyles({
     },
   })(Avatar);
 
-export default function Post({id,userId,image, username, message,timestamp,handleRemovePost,feeling}) {
+export default function Post({id,userId,image, username, message,timestamp,handleRemovePost,feeling,disabled}) {
     const classes = useStyles();
     const sessionStr = localStorage.getItem("session")
     const sessionJson = JSON.parse(sessionStr)
@@ -62,7 +62,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
     const [userImageUrl,setUserImageUrl] = React.useState('');
     const [like,setLike] = React.useState();
     const [comment,setComment] = React.useState('')
-    const [showcomments,setShowComments] = React.useState(true)
+    const [showcomments,setShowComments] = React.useState(false)
     const [comments, setComments] = React.useState([])
     const [countLikes,setCountLikes] = React.useState(0);
     const [countComments,setCountComments] = React.useState(0);
@@ -181,7 +181,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
               <ThumbUpIcon /> Me gusta
             </Button>
             
-            <Button className="post__option" onClick={()=>setShowComments(!showcomments)}>
+            <Button className="post__option" onClick={()=>setShowComments(!showcomments)} disabled={disabled}>
               <ChatBubbleOutlineIcon/> Comentar
             </Button>
             {/*userId!==userIdStorage &&

@@ -80,7 +80,7 @@ export default function Comment({id,userId,username,message,timestamp,userImageU
             </Dialog></>
                 }
             </div>
-            <ReactTimeAgo className={classes.timestamp} date={timestamp} locale="es-PE" wrapperComponent={TooltipContainer} tooltip={false}/>
+            <ReactTimeAgo className={classes.timestamp} date={timestamp} wrapperComponent={TooltipContainer} tooltip={false}/>
            
         </div>
     )
