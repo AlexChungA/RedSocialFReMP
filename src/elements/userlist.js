@@ -105,7 +105,7 @@ const useStyles = makeStyles({
         width:"inherit"
     }
   });
-let socket = io.connect("https://redsocial-fc.herokuapp.com", {
+let socket = io.connect("https://red-social-fc.herokuapp.com", {
   withCredentials: true,
 });
 export default function UserList(props) {

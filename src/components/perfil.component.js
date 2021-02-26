@@ -104,7 +104,7 @@ export default class Perfil extends Component {
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        let socket = io.connect("https://redsocial-fc.herokuapp.com", {
+        let socket = io.connect("https://red-social-fc.herokuapp.com", {
             withCredentials: true,
           });
         await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{
@@ -127,7 +127,7 @@ export default class Perfil extends Component {
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        let socket = io.connect("https://redsocial-fc.herokuapp.com", {
+        let socket = io.connect("https://red-social-fc.herokuapp.com", {
             withCredentials: true,
           });
         await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/${friendId}/`,{method: "DELETE"}).then(res=>res.json())
@@ -148,7 +148,7 @@ export default class Perfil extends Component {
         if(!this.state.loggedIn){
             return <Redirect to = "/"/>
         }
-        let socket = io.connect("https://redsocial-fc.herokuapp.com", {
+        let socket = io.connect("https://red-social-fc.herokuapp.com", {
             withCredentials: true,
           });
         setInterval(()=>{

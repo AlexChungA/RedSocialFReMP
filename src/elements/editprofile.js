@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
   },
 }));
-let socket = io.connect("https://redsocial-fc.herokuapp.com");
+let socket = io.connect("https://red-social-fc.herokuapp.com");
 export default function EditProfileButton({update_profile,user}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
