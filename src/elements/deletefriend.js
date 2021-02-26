@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import io from "socket.io-client";
 
-//let socket = io.connect("https://redsocial-305406.web.app");
+let socket = io.connect("https://redsocial-fc.herokuapp.com");
 export default function DeleteFriendButton({remove_friend,friendId}) {
   const [open, setOpen] = React.useState(false);
 
@@ -20,8 +20,8 @@ export default function DeleteFriendButton({remove_friend,friendId}) {
 
   const handleRemove = () => {
     remove_friend(friendId)
-    //fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
-       // .then(data=>socket.volatile.emit('users',data.users))
+    fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
+        .then(data=>socket.volatile.emit('users',data.users))
     setOpen(false)
   }
 

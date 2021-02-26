@@ -70,7 +70,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
     const [open, setOpen] = React.useState(false);  
     React.useEffect(() => {
         fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json()).then(data=>{setUserImageUrl(data.user.imageUrl)})
-        fetch(`http://localhost:5000/inicio/posts/${id}/comments`).then(res=>res.json()).then(data=>{if(data.comments){setComments(data.comments)
+        fetch(`https://redsocial-fc.herokuapp.com/inicio/posts/${id}/comments`).then(res=>res.json()).then(data=>{if(data.comments){setComments(data.comments)
                                                                                                                        setCountComments(data.countComments)}})
     }, [])
     
@@ -101,7 +101,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
 
     const handleCommentSubmit = (e) => {
       e.preventDefault();
-      fetch(`http://localhost:5000/inicio/posts/${id}/comments`,{
+      fetch(`https://redsocial-fc.herokuapp.com/inicio/posts/${id}/comments`,{
                       method: "POST",
                       headers: {
                           "Content-Type": "application/json"
@@ -113,7 +113,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
     }
 
     const handleRemoveComment = commentId =>{
-      fetch(`http://localhost:5000/inicio/posts/${id}/comments/${commentId}`,{method: "DELETE",withCredentials: "include"})
+      fetch(`https://redsocial-fc.herokuapp.com/inicio/posts/${id}/comments/${commentId}`,{method: "DELETE",withCredentials: "include"})
               .then(res=>res.json()).then(data=>{setCountComments(data.countComments) 
                                                   setComments(comments.filter(comment => comment._id !== commentId))})
     }

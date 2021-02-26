@@ -33,10 +33,10 @@ export default class People extends Component {
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        /*let socket = io.connect("https://redsocial-305406.web.app", {
+        let socket = io.connect("https://redsocial-fc.herokuapp.com", {
             withCredentials: true,
-          });*/
-        await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{
+          });
+        await fetch(`https://redsocial-fc.herokuapp.com/users/${userId}/friends/`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -48,18 +48,18 @@ export default class People extends Component {
             localStorage.setItem("session", JSON.stringify(data))
             this.setState({user:data.user})
         })
-        fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
+        fetch("https://redsocial-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
         .then(data => {this.setState({users:data.users})
-                       /*socket.volatile.emit('users',data.users)*/})
+                       socket.volatile.emit('users',data.users)})
       }
     
     remove_friend =async (friendId) =>{
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        /*let socket = io.connect("https://redsocial-305406.web.app", {
+        let socket = io.connect("https://redsocial-fc.herokuapp.com", {
             withCredentials: true,
-          });*/
+          });
         await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/${friendId}/`,{method: "DELETE"}).then(res=>res.json())
         .then(data => {
             localStorage.setItem("session", JSON.stringify(data))
@@ -67,7 +67,7 @@ export default class People extends Component {
         })
         fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
         .then(data => {this.setState({users:data.users})
-                      /* socket.volatile.emit('users',data.users)*/})
+                       socket.volatile.emit('users',data.users)})
     }
 
     render() {

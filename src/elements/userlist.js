@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Avatar, IconButton, Tooltip } from '@material-ui/core';
 import { HiUserAdd, HiUserRemove } from "react-icons/hi";
@@ -104,9 +105,9 @@ const useStyles = makeStyles({
         width:"inherit"
     }
   });
-/*let socket = io.connect("https://redsocial-305406.web.app", {
+let socket = io.connect("https://redsocial-fc.herokuapp.com", {
   withCredentials: true,
-});*/
+});
 export default function UserList(props) {
  const [searchTerm, setSearchTerm] = useState("");
  const [searchResults, setSearchResults] = useState([]);
@@ -114,7 +115,7 @@ export default function UserList(props) {
  const sessionStr = localStorage.getItem("session")
  const sessionJson = JSON.parse(sessionStr)
  const userId = sessionJson.user._id
- 
+ let history = useHistory();
  const handleChange = event => {
     setSearchTerm(event.target.value);
   };
@@ -126,19 +127,29 @@ export default function UserList(props) {
       );
       setSearchResults(results);
   }
+
+const routeChange = (item) =>{ 
+    let user = item.friends.filter(friend => friend.id === userId);
+    if(user !== null){
+      const roomId = user[0].room;
+      //console.log("myroom"+roomId)
+      let path = `/chat/${roomId}/${item._id}`;
+      history.push(path); 
+    }
+  }
   
  useEffect(() => {
     const results = props.users.filter(user =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSearchResults(results);
-    /*socket.on("usersResponse",users => {
+    socket.on("usersResponse",users => {
       console.log(users)
       const results = users.filter(user =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setSearchResults(results);
-    })*/
+    })
   }, [props.users]);
 
   return (
@@ -181,10 +192,9 @@ export default function UserList(props) {
                   <HiUserAdd />
                 </IconButton>
               </Tooltip>
-/*TODO si el status está en por confirmar mostrar botones para aceptar(POST) o rechazar(DELETE) en el perfil del que mandó la solicitud */
             : item.friends.find(friend=>friend.id===userId).status==="amigos" ? 
               <Tooltip title="Mensaje" placement="bottom">
-                <IconButton aria-label="message_friend" className={styles.addFriend}>
+                <IconButton aria-label="message_friend" className={styles.addFriend} onClick={() => routeChange(item)}>
                   <RiMessageFill />
                 </IconButton>
               </Tooltip>

@@ -64,7 +64,7 @@ export default class Muro extends Component{
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        fetch('http://localhost:5000/inicio/posts/'+userId+'/'+id,{method:'DELETE'})
+        fetch('https://redsocial-fc.herokuapp.com/inicio/posts/'+userId+'/'+id,{method:'DELETE'})
         const new_posts = this.state.posts.filter(post => post._id !== id)
         this.setState({posts:new_posts})
       }

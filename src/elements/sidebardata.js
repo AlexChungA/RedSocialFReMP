@@ -4,6 +4,7 @@ import * as IoIcon from 'react-icons/io';
 import * as IoIcons from 'react-icons/io5';
 import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
+import { RiMessageFill } from "react-icons/ri";
 
 let userId = "me"
 export const SidebarData = [
@@ -23,6 +24,12 @@ export const SidebarData = [
         title: 'Perfil',
         path: '/perfil/'+userId,
         icon: <PersonIcon/>,
+        cName: 'nav-text'
+    },
+    {
+        title: 'Chat',
+        path: '/chat/',
+        icon: <RiMessageFill />,
         cName: 'nav-text'
     },
     {

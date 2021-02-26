@@ -6,6 +6,7 @@ import ProfileTable from '../elements/profiletable';
 import Navbar from '../elements/navbar';
 import EditProfileButton from '../elements/editprofile';
 import DeleteFriendButton from '../elements/deletefriend';
+import io from "socket.io-client";
 const ProfileAvatar = withStyles({
     root: {
       width: "140px",
@@ -37,6 +38,7 @@ export default class Perfil extends Component {
         this.update_profile.bind()
         this.add_friend.bind()
         this.remove_friend.bind()
+        this.routeChange.bind()
     }
 
     componentDidMount(){
@@ -69,10 +71,12 @@ export default class Perfil extends Component {
                 if(userId !==this.state.user._id){
                 this.setState(
                     {name:data.user.name,
+                     labor:data.user.labor,
                      imageUrl:data.user.imageUrl})}
                 else{
                     this.setState({
                         name:data.user.name,
+                        labor:data.user.labor,
                         imageUrl:data.user.imageUrl,
                         dates:data.dates
                     })
@@ -92,7 +96,7 @@ export default class Perfil extends Component {
             }).then(res=>res.json())
             .then(data=>{
                 localStorage.setItem("session", JSON.stringify(data))
-                this.setState({user:data.user,imageUrl:data.user.imageUrl})
+                this.setState({user:data.user,labor:data.user.labor,imageUrl:data.user.imageUrl})
             })
     }
 
@@ -100,9 +104,9 @@ export default class Perfil extends Component {
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        /*let socket = io.connect("https://redsocial-305406.web.app", {
+        let socket = io.connect("https://redsocial-fc.herokuapp.com", {
             withCredentials: true,
-          });*/
+          });
         await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{
             method: "POST",
             headers: {
@@ -116,29 +120,41 @@ export default class Perfil extends Component {
             this.setState({user:data.user})
         })
         fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
-        /*.then(data => socket.volatile.emit('users',data.users))*/
+        .then(data => socket.volatile.emit('users',data.users))
       }
 
     remove_friend =async (friendId) =>{
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        /*let socket = io.connect("https://redsocial-305406.web.app", {
+        let socket = io.connect("https://redsocial-fc.herokuapp.com", {
             withCredentials: true,
-          });*/
+          });
         await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/${friendId}/`,{method: "DELETE"}).then(res=>res.json())
         .then(data => {
             localStorage.setItem("session", JSON.stringify(data))
             this.setState({user:data.user})
         })
         fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
-        /*.then(data =>  socket.volatile.emit('users',data.users))*/
+        .then(data =>  socket.volatile.emit('users',data.users))
+    }
+
+    routeChange = (item) =>{ 
+        let path = `/chat/${item.room}/${item.id}`;
+        this.props.history.push(path); 
     }
 
     render(){
         if(!this.state.loggedIn){
             return <Redirect to = "/"/>
         }
+        let socket = io.connect("https://redsocial-fc.herokuapp.com", {
+            withCredentials: true,
+          });
+        setInterval(()=>{
+            socket.volatile.emit('keep_alive');
+            console.log('Keeping alive');
+          },30000);
         return(
             
             <div>
@@ -157,7 +173,7 @@ export default class Perfil extends Component {
                         : JSON.parse(localStorage.getItem("session")).user.friends.find(friend=>friend.id===this.props.match.params.userId) ?
                         JSON.parse(localStorage.getItem("session")).user.friends.find(friend=>friend.id===this.props.match.params.userId).status==="amigos" ?
                         <div className="options">
-                        <Button>Mensaje</Button>
+                        <Button onClick={() => this.routeChange(JSON.parse(localStorage.getItem("session")).user.friends.find(friend=>friend.id===this.props.match.params.userId))}>Mensaje</Button>
                         <DeleteFriendButton remove_friend={this.remove_friend} friendId={this.props.match.params.userId}/>
                         </div>
                         :JSON.parse(localStorage.getItem("session")).user.friends.find(friend=>friend.id===this.props.match.params.userId).status==="pendiente"?

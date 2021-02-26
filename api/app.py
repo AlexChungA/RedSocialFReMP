@@ -3,7 +3,7 @@ from bson import json_util,objectid
 import db
 from emotion_recognition import predict_emotion
 import datetime
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 app = Flask(__name__)
@@ -215,14 +215,80 @@ def get_users():
     users = JsonEncoder(users)
     return {"users":users}
 
+@app.route('/users/<userId>', methods=['GET'])
+def get_user_by_id(userId):
+    userId = objectid.ObjectId(userId)
+    user = db.db.usuario_collection.find_one({"_id":userId})
+    user = JsonEncodeOne(user)
+    return {"user":user}
+
+@app.route('/users/<userId>/friends/',methods=['GET'])
+def get_friends_by_user(userId):
+    mystrId = userId
+    userId = objectid.ObjectId(userId)
+    obj_ids =[]
+    for friend in db.db.usuario_collection.find({"_id":userId},{"friends.id":1,"_id":0,"friends.status":1}):
+        friends = friend
+        for uId in friends['friends']:
+            if uId['status'] == 'amigos':
+                obj_ids.append(objectid.ObjectId(uId['id']))
+
+    rooms=[]
+    myUser = get_user_by_id(userId)
+    
+
+    users=[]
+    for user in db.db.usuario_collection.find({"_id":{"$in":obj_ids}}):
+        for friend in user['friends']:
+            if friend['id'] == mystrId:
+                user['room']=friend['room']
+        users.append(user)
+
+    users = JsonEncoder(users)
+    return {"users":users}
+
 @socketio.on('users')
 def handle_users(users):
     print("USEEEEEERS")
     emit('usersResponse',users,broadcast=True)
 
-#@socketio.on('connect')
-#def test_connect():
-#    print("CONNECTED")
+@app.route('/messages/<roomId>/',methods=['GET'])
+def get_messages(roomId):
+    messages = [message for message in db.db.message_collection.find({"roomId":roomId})]
+    messages = JsonEncoder(messages)
+    return {"messages":messages}
+# ENVIAR MENSAJE
+@socketio.on('send_message')
+def handle_send_message_event(data):
+    #app.logger.info("{} has sent message to the room {}: {}".format(data['userId'], data['roomId'],data['message']))
+    #save_message(data['room'], data['message'], data['userId'])
+    print(data)
+    print("MENSAJE_SOCKET")
+    db.db.message_collection.insert_one({'roomId': data['roomId'], 'message': data['message'], 'sender': data['sender'], "receiver": data['receiver'] , 'createdAt': data['createdAt']})
+    message = JsonEncodeOne(db.db.message_collection.find_one({'roomId': data['roomId'],'createdAt': data['createdAt']}))
+    print(message)
+    emit('receive_message', message, room=message['roomId'])
+
+#UNIR LA SALA
+@socketio.on('join_room')
+def handle_join_room_event(data):
+    #app.logger.info("{} has joined the room {}".format(data['userId'], data['roomId']))
+    print("UNIDO A LA SALA")
+    join_room(data['roomId'])
+    #socketio.emit('join_room_announcement', data, room=data['roomId'])
+
+#DEJAR LA SALA
+@socketio.on('leave_room')
+def handle_leave_room_event(data):
+    app.logger.info("{} has left the room {}".format(data['userId'], data['roomId']))
+    leave_room()
+    #socketio.emit('leave_room_announcement', data, room=data['roomId'])
+
+@socketio.on('keep_alive')
+def keep_alive():
+   print("-"*25)
+   print("KEEPING ALIVE") 
+   print("-"*25)
 
 @app.route('/users/<userId>/friends/',methods=['POST'])
 def add_friend(userId):
@@ -232,8 +298,13 @@ def add_friend(userId):
         db.db.usuario_collection.update({"_id":objectid.ObjectId(userId)},{"$addToSet":{"friends":friend}})
         db.db.usuario_collection.update({"_id":objectid.ObjectId(friend["id"])},{"$addToSet":{"friends":friend_request}})
     elif friend["status"] == "amigos":
+        db.db.room_collection.insert_one({"users":[userId, friend["id"]], "name":userId+friend["id"]})
+        room = db.db.room_collection.find_one({"name":userId+friend["id"]})
+        roomId = str(room["_id"])
         db.db.usuario_collection.update_one({"_id":objectid.ObjectId(userId),"friends.id":friend["id"]},{"$set":{"friends.$.status":friend["status"]}})
+        db.db.usuario_collection.update_one({"_id":objectid.ObjectId(userId),"friends.id":friend["id"]},{"$set":{"friends.$.room" : roomId}}, upsert = True)
         db.db.usuario_collection.update_one({"_id":objectid.ObjectId(friend["id"]),"friends.id":userId},{"$set":{"friends.$.status":friend["status"]}})
+        db.db.usuario_collection.update_one({"_id":objectid.ObjectId(friend["id"]),"friends.id":userId},{"$set":{"friends.$.room" : roomId}}, upsert = True)
     user = JsonEncodeOne(db.db.usuario_collection.find_one({"_id":objectid.ObjectId(userId)}))
     return {"loggedIn":True,"user":user}
 

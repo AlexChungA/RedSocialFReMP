@@ -11,6 +11,7 @@ import Muro from './components/muro.component';
 import Diario from './components/diario.component';
 import Perfil from './components/perfil.component';
 import People from './components/people.component';
+import Chat from './components/chat.component';
 
 export default class App extends Component {
   render(){
@@ -26,6 +27,8 @@ export default class App extends Component {
                 <Route path="/diario" component={Diario} />
                 <Route path="/perfil/:userId" component={Perfil}/>
                 <Route path="/personas" component={People}/>
+                <Route path="/chat/:roomId/:friendId" component={Chat}/>
+                <Route path="/chat/" component={Chat}/>
               </Switch>
         </div>
       </Router>
