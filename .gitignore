@@ -8,10 +8,10 @@ venv
 
 # testing
 /coverage
-/api/heroku
+/.vscode
 # production
 /build
-
+/api
 # misc
 .DS_Store
 .env.local
