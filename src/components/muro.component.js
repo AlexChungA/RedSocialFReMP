@@ -4,7 +4,7 @@ import Navbar from "../elements/navbar";
 import MessageSender from "../elements/messagesender";
 import Post from "../elements/post";
 import TimeAgo from 'javascript-time-ago'
-
+import INSTRUCCIONES from '../static/instrucciones.jpeg'
 import en from 'javascript-time-ago/locale/en'
 import es from 'javascript-time-ago/locale/es'
 import './muro.css'
@@ -87,11 +87,12 @@ export default class Muro extends Component{
         return(
             <div>
                 <Navbar title="Inicio"/>
-                <div className="inicio">
-                    <div className="feed">
+                <div className="index">
+                    <div className="newsfeed">
                         <MessageSender handleAddPost={this.handleAddPost}/>
                         {postList}
                     </div>
+                    <img src={INSTRUCCIONES} className="instructions"/>
                 </div>
             </div>
         )
