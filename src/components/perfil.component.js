@@ -156,7 +156,7 @@ export default class Perfil extends Component {
           });
         setInterval(()=>{
             socket.volatile.emit('keep_alive');
-            console.log('Keeping alive');
+            //console.log('Keeping alive');
           },30000);
         return(
             

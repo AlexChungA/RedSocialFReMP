@@ -66,7 +66,7 @@ const Chat = () => {
     }
 
     const getFriends = async() => {
-      console.log(userId);
+      //console.log(userId);
       fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{method:'GET'}).then(res=>res.json())
       .then((data) => {
           //console.log(data);
@@ -97,10 +97,10 @@ const Chat = () => {
         });
         setInterval(()=>{
           socket.volatile.emit('keep_alive');
-          console.log('Keeping alive');
+          //console.log('Keeping alive');
         },30000);
         socket.emit('join_room', { userId , roomId });
-        console.log(socket);
+        //console.log(socket);
         return () => {
             socket.emit('leave_room');
             socket.off();
@@ -128,7 +128,7 @@ const Chat = () => {
             setMessages([...messages, data]);
           }
         })
-        console.log("entra al useffect");
+        //console.log("entra al useffect");
     },[messages])
 
     useEffect(() => { 

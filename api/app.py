@@ -249,7 +249,7 @@ def get_friends_by_user(userId):
 
 @socketio.on('users')
 def handle_users(users):
-    print("USEEEEEERS")
+    #print("USEEEEEERS")
     emit('usersResponse',users,broadcast=True)
 
 @app.route('/messages/<roomId>/',methods=['GET'])
@@ -262,18 +262,18 @@ def get_messages(roomId):
 def handle_send_message_event(data):
     #app.logger.info("{} has sent message to the room {}: {}".format(data['userId'], data['roomId'],data['message']))
     #save_message(data['room'], data['message'], data['userId'])
-    print(data)
-    print("MENSAJE_SOCKET")
+    #print(data)
+    #print("MENSAJE_SOCKET")
     db.db.message_collection.insert_one({'roomId': data['roomId'], 'message': data['message'], 'sender': data['sender'], "receiver": data['receiver'] , 'createdAt': data['createdAt']})
     message = JsonEncodeOne(db.db.message_collection.find_one({'roomId': data['roomId'],'createdAt': data['createdAt']}))
-    print(message)
+    #print(message)
     emit('receive_message', message, room=message['roomId'])
 
 #UNIR LA SALA
 @socketio.on('join_room')
 def handle_join_room_event(data):
     #app.logger.info("{} has joined the room {}".format(data['userId'], data['roomId']))
-    print("UNIDO A LA SALA")
+    #print("UNIDO A LA SALA")
     join_room(data['roomId'])
     #socketio.emit('join_room_announcement', data, room=data['roomId'])
 

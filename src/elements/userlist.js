@@ -145,7 +145,7 @@ const routeChange = (item) =>{
     );
     setSearchResults(results);
     socket.on("usersResponse",users => {
-      console.log(users)
+      //console.log(users)
       const results = users.filter(user =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
