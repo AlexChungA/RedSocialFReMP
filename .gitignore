@@ -11,7 +11,8 @@ venv
 .vscode
 # production
 /build
-api
+#api
+heroku
 # misc
 .DS_Store
 .env.local
