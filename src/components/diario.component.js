@@ -30,7 +30,7 @@ export default class Diario extends Component{
   }
 
   handleAddItem = addItem => {
-    fetch("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/diario/tareas/",{
+    fetch("https://red-social-fc.herokuapp.com/diario/tareas/",{
       method: "POST",
       headers: {
           "Content-Type": "application/json"
@@ -47,7 +47,7 @@ handleRemoveItem= id =>{
   const sessionStr = localStorage.getItem("session")
   const sessionJson = JSON.parse(sessionStr)
   const userId = sessionJson.user._id
-  fetch('https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/diario/tareas/'+userId+'/'+id,{method:'DELETE'})
+  fetch('https://red-social-fc.herokuapp.com/diario/tareas/'+userId+'/'+id,{method:'DELETE'})
   .then(res=>res.json()).then(data=>this.setState({
     task: data.task
   }))
@@ -57,7 +57,7 @@ handleUpdateItem=id=>{
   const sessionStr = localStorage.getItem("session")
   const sessionJson = JSON.parse(sessionStr)
   const userId = sessionJson.user._id
-  fetch('https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/diario/tareas/'+userId+'/'+id,{method:'PUT'})
+  fetch('https://red-social-fc.herokuapp.com/diario/tareas/'+userId+'/'+id,{method:'PUT'})
   .then(res=>res.json()).then(data=>this.setState({
     task: data.task
   }))

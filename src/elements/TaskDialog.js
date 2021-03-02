@@ -57,7 +57,7 @@ export default function TaskDialog({taskId}) {
   const user = sessionJson.user
 
   const handleClickOpen = () => {
-    fetch('https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/diario/tareas/'+user._id+'/'+taskId)
+    fetch('https://red-social-fc.herokuapp.com/diario/tareas/'+user._id+'/'+taskId)
     .then(response => response.json())
     .then(data => setTasks(data.tasks)
    )

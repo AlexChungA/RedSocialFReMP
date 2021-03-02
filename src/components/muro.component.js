@@ -37,7 +37,7 @@ export default class Muro extends Component{
         if(sessionStr != null){
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        fetch('https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/inicio/posts/'+userId+'/')
+        fetch('https://red-social-fc.herokuapp.com/inicio/posts/'+userId+'/')
         .then(response => response.json())
         .then(data => this.setState({posts:data.posts}),
        );
@@ -47,7 +47,7 @@ export default class Muro extends Component{
     }
 
     handleAddPost = addPost => {
-        fetch("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/inicio/posts/",{
+        fetch("https://red-social-fc.herokuapp.com/inicio/posts/",{
           method: "POST",
           headers: {
               "Content-Type": "application/json"
@@ -64,7 +64,7 @@ export default class Muro extends Component{
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        fetch('https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/inicio/posts/'+userId+'/'+id,{method:'DELETE'})
+        fetch('https://red-social-fc.herokuapp.com/inicio/posts/'+userId+'/'+id,{method:'DELETE'})
         const new_posts = this.state.posts.filter(post => post._id !== id)
         this.setState({posts:new_posts})
       }

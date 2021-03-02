@@ -10,7 +10,7 @@ export default function TaskList(props) {
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        fetch('https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/diario/tareas/'+userId+'/'+date)
+        fetch('https://red-social-fc.herokuapp.com/diario/tareas/'+userId+'/'+date)
             .then(response => response.json())
             .then(data => setTasks(data.tasks)
            );
