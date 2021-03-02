@@ -28,7 +28,7 @@ export default class Photo extends Component{
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const photo = {userId:sessionJson.user._id,photo:imageSrc}
-        await fetch("https://cors-anywhere-redsocial.herokuapp.com/https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/photo",{
+        await fetch("https://red-social-fc.herokuapp.com/photo",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

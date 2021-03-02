@@ -7,7 +7,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins=None)
+socketio = SocketIO(app, cors_allowed_origins="*")
 bcrypt = Bcrypt(app)
 CORS(app)
 

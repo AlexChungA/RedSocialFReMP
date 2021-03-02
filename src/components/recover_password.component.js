@@ -40,7 +40,7 @@ export default class RecoverPassword extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     const user = {email:this.state.email, password:this.state.password};
-    await fetch("https://cors-anywhere-redsocial.herokuapp.com/https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/recoverpassword",{
+    await fetch("https://red-social-fc.herokuapp.com/recoverpassword",{
         method: "POST",
         headers: {
             "Content-Type": "application/json"

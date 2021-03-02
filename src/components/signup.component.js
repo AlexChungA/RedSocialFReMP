@@ -72,7 +72,7 @@ export default class SignUp extends Component {
         
         const hash = bcrypt.hashSync(this.state.password,12)
         const new_user = {name:this.state.name+" "+this.state.lastname, email:this.state.email, password:hash, labor:"", imageUrl:"",friends:[]};
-        await fetch("https://cors-anywhere-redsocial.herokuapp.com/https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/sign-up",{
+        await fetch("https://red-social-fc.herokuapp.com/sign-up",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
