@@ -47,7 +47,7 @@ const Chat = () => {
     const [message, setMessage] = useState('');
     const classes = useStyles();
     const history = useHistory();
-    const ENDPOINT = 'https://red-social-fc.herokuapp.com';
+    const ENDPOINT = 'https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com';
     const sessionStr = localStorage.getItem("session")
     const sessionJson = JSON.parse(sessionStr)
     const userId = sessionJson.user._id
@@ -59,7 +59,7 @@ const Chat = () => {
             loggedIn = sessionJson.loggedIn
 
     const getMessages = async() => {
-      fetch(`https://red-social-fc.herokuapp.com/messages/${roomId}/`,{method:'GET'}).then(res=>res.json())
+      fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/messages/${roomId}/`,{method:'GET'}).then(res=>res.json())
       .then((data) => {
           setMessages(data.messages);
       })
@@ -67,7 +67,7 @@ const Chat = () => {
 
     const getFriends = async() => {
       console.log(userId);
-      fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{method:'GET'}).then(res=>res.json())
+      fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{method:'GET'}).then(res=>res.json())
       .then((data) => {
           //console.log(data);
           setFriends(data.users);
