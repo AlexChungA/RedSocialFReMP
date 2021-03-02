@@ -44,7 +44,7 @@ export default class Perfil extends Component {
     componentDidMount(){
         let userId = this.props.match.params.userId
         if(userId==="me")userId=this.state.user._id
-        fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json())
+        fetch("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json())
         .then(data=>{
         if(userId !==this.state.user._id){
         this.setState(
@@ -66,7 +66,7 @@ export default class Perfil extends Component {
         if (prevProps.match.params.userId !== this.props.match.params.userId){
             let userId = this.props.match.params.userId
             if(userId==="me")userId=this.state.user._id
-            fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json())
+            fetch("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json())
             .then(data=>{
                 if(userId !==this.state.user._id){
                 this.setState(
@@ -86,7 +86,7 @@ export default class Perfil extends Component {
     }
 
     update_profile = (labor,imageUrl) => {
-        fetch(`https://red-social-fc.herokuapp.com/perfil/${this.state.user._id}`,
+        fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/perfil/${this.state.user._id}`,
             {method:'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -104,10 +104,10 @@ export default class Perfil extends Component {
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        let socket = io.connect("https://red-social-fc.herokuapp.com", {
+        let socket = io.connect("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com", {
             withCredentials: true,
           });
-        await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{
+        await fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -119,7 +119,7 @@ export default class Perfil extends Component {
             localStorage.setItem("session", JSON.stringify(data))
             this.setState({user:data.user})
         })
-        fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
+        fetch("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
         .then(data => socket.volatile.emit('users',data.users))
       }
 
@@ -127,15 +127,15 @@ export default class Perfil extends Component {
         const sessionStr = localStorage.getItem("session")
         const sessionJson = JSON.parse(sessionStr)
         const userId = sessionJson.user._id
-        let socket = io.connect("https://red-social-fc.herokuapp.com", {
+        let socket = io.connect("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com", {
             withCredentials: true,
           });
-        await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/${friendId}/`,{method: "DELETE"}).then(res=>res.json())
+        await fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/users/${userId}/friends/${friendId}/`,{method: "DELETE"}).then(res=>res.json())
         .then(data => {
             localStorage.setItem("session", JSON.stringify(data))
             this.setState({user:data.user})
         })
-        fetch("https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
+        fetch("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/personas",{method:'GET'}).then(res=>res.json())
         .then(data =>  socket.volatile.emit('users',data.users))
     }
 
@@ -148,7 +148,7 @@ export default class Perfil extends Component {
         if(!this.state.loggedIn){
             return <Redirect to = "/"/>
         }
-        let socket = io.connect("https://red-social-fc.herokuapp.com", {
+        let socket = io.connect("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com", {
             withCredentials: true,
           });
         setInterval(()=>{

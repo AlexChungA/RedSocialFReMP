@@ -69,18 +69,18 @@ export default function Post({id,userId,image, username, message,timestamp,handl
     timestamp = new Date(timestamp);
     const [open, setOpen] = React.useState(false);  
     React.useEffect(() => {
-        fetch("https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json()).then(data=>{setUserImageUrl(data.user.imageUrl)})
-        fetch(`https://red-social-fc.herokuapp.com/inicio/posts/${id}/comments`).then(res=>res.json()).then(data=>{if(data.comments){setComments(data.comments)
+        fetch("https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/perfil/"+userId).then(res=>res.json()).then(data=>{setUserImageUrl(data.user.imageUrl)})
+        fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/inicio/posts/${id}/comments`).then(res=>res.json()).then(data=>{if(data.comments){setComments(data.comments)
                                                                                                                        setCountComments(data.countComments)}})
     }, [])
     
     const handleLike = () => {
        if (like) {setLike(false)
-                  fetch(`https://red-social-fc.herokuapp.com/inicio/posts/${id}/likes/${userIdStorage}`,{method: "DELETE",withCredentials: "include"})
+                  fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/inicio/posts/${id}/likes/${userIdStorage}`,{method: "DELETE",withCredentials: "include"})
               .then(res=>res.json()).then(data=>{setCountLikes(data.countLikes) })
        }
       else{setLike(true)
-            fetch(`https://red-social-fc.herokuapp.com/inicio/posts/${id}/likes`,{
+            fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/inicio/posts/${id}/likes`,{
                       method: "POST",
                       headers: {
                           "Content-Type": "application/json"
@@ -91,7 +91,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
     }
 
     React.useEffect(()=>{
-      fetch(`https://red-social-fc.herokuapp.com/inicio/posts/${id}/likes`,{withCredentials: "include"}).then(res=>res.json())
+      fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/inicio/posts/${id}/likes`,{withCredentials: "include"}).then(res=>res.json())
         .then(data=>{setCountLikes(data.countLikes)
           if(data.peopleLiked.find(user=>user.userId===userIdStorage)){
             setLike(true)
@@ -101,7 +101,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
 
     const handleCommentSubmit = (e) => {
       e.preventDefault();
-      fetch(`https://red-social-fc.herokuapp.com/inicio/posts/${id}/comments`,{
+      fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/inicio/posts/${id}/comments`,{
                       method: "POST",
                       headers: {
                           "Content-Type": "application/json"
@@ -113,7 +113,7 @@ export default function Post({id,userId,image, username, message,timestamp,handl
     }
 
     const handleRemoveComment = commentId =>{
-      fetch(`https://red-social-fc.herokuapp.com/inicio/posts/${id}/comments/${commentId}`,{method: "DELETE",withCredentials: "include"})
+      fetch(`https://cors-anywhere-redsocial.herokuapp.com/https://red-social-fc.herokuapp.com/inicio/posts/${id}/comments/${commentId}`,{method: "DELETE",withCredentials: "include"})
               .then(res=>res.json()).then(data=>{setCountComments(data.countComments) 
                                                   setComments(comments.filter(comment => comment._id !== commentId))})
     }
