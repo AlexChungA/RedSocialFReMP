@@ -107,6 +107,7 @@ const useStyles = makeStyles({
   });
 let socket = io.connect("https://red-social-fc.herokuapp.com", {
   withCredentials: true,
+  transports: ['websocket']
 });
 export default function UserList(props) {
  const [searchTerm, setSearchTerm] = useState("");

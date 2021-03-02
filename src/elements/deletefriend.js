@@ -6,7 +6,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import io from "socket.io-client";
 
-let socket = io.connect("https://red-social-fc.herokuapp.com");
+let socket = io.connect("https://red-social-fc.herokuapp.com", {
+  withCredentials: true,
+  transports: ['websocket']
+});
 export default function DeleteFriendButton({remove_friend,friendId}) {
   const [open, setOpen] = React.useState(false);
 

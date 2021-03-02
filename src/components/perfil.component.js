@@ -106,6 +106,7 @@ export default class Perfil extends Component {
         const userId = sessionJson.user._id
         let socket = io.connect("https://red-social-fc.herokuapp.com", {
             withCredentials: true,
+            transports: ['websocket']
           });
         await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/`,{
             method: "POST",
@@ -129,6 +130,7 @@ export default class Perfil extends Component {
         const userId = sessionJson.user._id
         let socket = io.connect("https://red-social-fc.herokuapp.com", {
             withCredentials: true,
+            transports: ['websocket']
           });
         await fetch(`https://red-social-fc.herokuapp.com/users/${userId}/friends/${friendId}/`,{method: "DELETE"}).then(res=>res.json())
         .then(data => {
@@ -150,6 +152,7 @@ export default class Perfil extends Component {
         }
         let socket = io.connect("https://red-social-fc.herokuapp.com", {
             withCredentials: true,
+            transports: ['websocket']
           });
         setInterval(()=>{
             socket.volatile.emit('keep_alive');

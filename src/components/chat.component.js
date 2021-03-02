@@ -93,6 +93,7 @@ const Chat = () => {
     useEffect(() => {
         socket = io.connect(ENDPOINT, {
           withCredentials: true,
+          transports: ['websocket']
         });
         setInterval(()=>{
           socket.volatile.emit('keep_alive');
